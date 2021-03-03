@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>After School Club</title>
+
+	<!--referencing the vue.js /always in the head tag/-->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel = "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+	<!--mounting -->
+	<div id="app">
+		
+        <header>
+            <h1>{{sitename}}</h1>
+        </header>
+
+        <main>
+            <div>
+                <h2>{{lesson.subject}}</h2>
+                <p>location: {{lesson.location}}</p>
+                <p>price: {{lesson.price}}</p>
+                <p>number of spaces: {{lesson.numberOfSpaces}}</p>
+
+                <button disabled>
+                    {{ cart.length }}
+                    
+                </button>
+                
+                <button v-on:click='addToCart' v-if='canAddToCart'>Add To Cart</button>
+                
+                <button disabled='disabled' v-else>Add To Cart</button>
+                
+
+            </div>
+        </main>
+	</div>
+
+	<!--creating the app-->
+	<script>
+		var app = new Vue({
+			el: '#app', //mounting reference to div id
+			data: {
+                sitename: 'After School Club',
+				lesson: {
+                    subject: 'maths',
+                    location: 'dubai',
+                    price: '100',
+                    numberOfSpaces: 5,
+                },
+                cart: [],
+
+			},
+            
+            methods: {
+                addToCart: function () {
+                    this.cart.push(this.lesson.subject);
+                    if(this.lesson.numberOfSpaces > 0){
+                        this.lesson.numberOfSpaces -= 1;
+                    }
+                    
+                },
+
+            },
+
+            computed:{
+                canAddToCart: function(){
+                    return this.lesson.numberOfSpaces > 0;
+                }
+            }
+
+		})
+
+		
+
+	</script>
+</body>
+</html>
